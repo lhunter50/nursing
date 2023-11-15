@@ -1,0 +1,16 @@
+{% block content %}
+        {% for medication in medications %}
+            <div>
+                <div>
+                    <h1>{{medication.name}}</h1>
+                </div>
+                {{medication.classification}}
+                {{medication.intention}}
+                {{medication.implications}}
+                {{medication.dose}}
+                {{medication.route}}
+                {{medication.frequency}}
+            </div>
+        {% endfor %}
+
+{% endblock content %}
