@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', views.home, name='home'),
-    path('patients/', views.patients, name='patients'),
+    path('', views.Home.as_view(), name='home'),
+    # path('patients/', views.patients, name='patients'),
 
-    path('create-med/', views.createMed, name='create-meds'),
+    path('create-med/', views.MedicationForm.as_view(), name='create-meds'),
 ]
