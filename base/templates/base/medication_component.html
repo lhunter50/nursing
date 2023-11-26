@@ -4,8 +4,9 @@
 
     {% for medication in medications %}
         <h2>{{medication.name}}</h2>
+        <a class="btn" href="{% url 'medication-update' medication.id%}" role="button">Edit</a>
         <div class="table-responsive">
-        <table class="table align-middle mb-0 bg-white">
+        <table class="table align-middle mb-0 bg-white table-bordered">
             <thead class="bg-light">
                 <tr>
                     <th scope="row">Dose Route Frequency</th>
@@ -25,12 +26,8 @@
                             </div>
                         </div>
                     </td>
-                    <td style="word-wrap: break-word; min-width: 160px;max-width: 160px;">
-                        <div class="d-flex align-items-center">
-                            <div class="ms-3">
-                                <p>{{medication.classification}}</p>
-                            </div>
-                        </div>
+                    <td style="word-wrap: break-word; min-width: 160px;max-width: 100px;">
+                        <p>{{medication.classification}}</p>
                     </td>
                     <td style="word-wrap: break-word; min-width: 160px;max-width: 160px;">
                         <p>{{medication.intention}}</p>
@@ -42,7 +39,7 @@
             </tbody>
         </table>
     </div>
-        <hr/>
+        <hr class="hr hr-blurry" />
     {% endfor %}
 
     <div class="pagination">

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, UpdateView
 
 from .models import Medication
 from .forms import MedForm
@@ -24,6 +24,12 @@ class Home(ListView):
         if search:
             object_list = object_list.filter(name__icontains = search)
         return object_list
+    
+
+class MedicationView(ListView):
+    template_name = 'base/medication.html'
+    model = Medication
+    context_object_name = 'medication'
 
 class MedicationForm(FormView):
     template_name = 'base/meds_form.html'
@@ -33,3 +39,22 @@ class MedicationForm(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class MedicationUpdateView(UpdateView):
+    form_class = MedForm
+    template_name = 'base/meds_form.html'
+    model = Medication
+    success_url='/'
+
+
+    def get(self, request, **kwargs):
+        self.object = Medication.objects.get(id=self.kwargs['pk'])
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        context = self.get_context_data(object=self.object, form=form)
+        return self.render_to_response(context)
+    
+    def get_object(self, queryset=None):
+        obj = Medication.objects.get(id=self.kwargs['pk'])
+        return obj
