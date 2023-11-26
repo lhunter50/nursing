@@ -16,6 +16,7 @@ class Home(ListView):
     model = Medication
     context_object_name = 'medications'
     ordering = ['name']
+    paginate_by = 10
 
     def get_queryset(self, *args, **kwargs):
         object_list = super(Home, self).get_queryset(*args, **kwargs)
