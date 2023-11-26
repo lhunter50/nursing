@@ -1,0 +1,48 @@
+{% block content %}
+
+{% load django_bootstrap5 %}
+
+    {% for medication in medications %}
+        <h2>{{medication.name}}</h2>
+        <div class="table-responsive">
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+                <tr>
+                    <th scope="row">Dose Route Frequency</th>
+                    <th scope="row">Classification</th>
+                    <th scope="row">Intended Purpose</th>
+                    <th scope="row">Implications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="align-center">
+                    <td style="word-wrap: break-word; min-width: 160px;max-width: 160px;">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <p>{{medication.dose}}</p>
+                                <p>{{medication.route}}</p>
+                                <p>{{medication.frequency}}</p>    
+                            </div>
+                        </div>
+                    </td>
+                    <td style="word-wrap: break-word; min-width: 160px;max-width: 160px;">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-3">
+                                <p>{{medication.classification}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="word-wrap: break-word; min-width: 160px;max-width: 160px;">
+                        <p>{{medication.intention}}</p>
+                    </td>
+                    <td style="word-wrap: break-word; min-width: 160px;max-width: 160px;">
+                        <p>{{medication.implications}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <hr/>
+    {% endfor %}
+
+{% endblock content %}

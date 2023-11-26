@@ -1,11 +1,22 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from .models import Medication
 from .forms import MedForm
 
 # Create your views here.
 
 def home(request):
-    medications = Medication.objects.all()
+    q = request.GET.get('q', None)
+
+    if not q:
+        medications = Medication.objects.all().order_by('name')
+        print(f"Searched with no query")
+
+    else:
+        medications = Medication.objects.filter(
+            Q(name__icontains = q)
+        ).order_by('name')
+        print(f"Searched with query {q}")
 
     context = {'medications': medications}
     return render(request, 'base/home.html', context)
@@ -28,6 +39,6 @@ def createMed(request):
             meds = form.save(commit=False)
             meds.save()
             return redirect('home')
-        
+            
     context = {'form': form}
     return render(request, 'base/meds_form.html', context)

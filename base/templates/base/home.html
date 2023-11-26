@@ -2,13 +2,12 @@
 
 {% block content %}
 
-    <h1>Home Template</h1>
+    <div class="container bg-light">
+        {% include 'base/header_component.html' %}
+        
+        {% include 'base/medication_component.html' %}
+    </div>
 
-    <a href="{% url 'create-meds' %}">
-        create
-    </a>
-    
-    {% include 'base/medication.html' %}
 
 
 {% endblock content %}

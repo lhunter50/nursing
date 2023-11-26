@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="p-5 text-center">
+        <h5>Use the search bar to find desired medication. You may also create a 
+            new medication by clicking the 'Create' button below!
+        </h5>
+        <hr/>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+            <button class="btn btn-outline-success">Search</button>
+        </form>
+    </div>
+    <a class="btn btn-primary" href="{% url 'create-meds' %}">Create</a>
+    <hr/>
+{% endblock content %}
