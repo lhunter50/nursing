@@ -1,44 +1,35 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.views.generic import ListView, FormView
+
 from .models import Medication
 from .forms import MedForm
+# from .controller import search
 
 # Create your views here.
 
-def home(request):
-    q = request.GET.get('q', None)
+# class based views 
+# Django REST framework
 
-    if not q:
-        medications = Medication.objects.all().order_by('name')
-        print(f"Searched with no query")
+class Home(ListView):
+    template_name = 'base/home.html'
+    model = Medication
+    context_object_name = 'medications'
+    ordering = ['name']
+    paginate_by = 10
 
-    else:
-        medications = Medication.objects.filter(
-            Q(name__icontains = q)
-        ).order_by('name')
-        print(f"Searched with query {q}")
+    def get_queryset(self, *args, **kwargs):
+        object_list = super(Home, self).get_queryset(*args, **kwargs)
+        search = self.request.GET.get('q', None)
+        if search:
+            object_list = object_list.filter(name__icontains = search)
+        return object_list
 
-    context = {'medications': medications}
-    return render(request, 'base/home.html', context)
+class MedicationForm(FormView):
+    template_name = 'base/meds_form.html'
+    form_class = MedForm
+    success_url = '/'
 
-def patients(request):
-    return render (request, 'base/patients.html')
-
-def medication(request,pk):
-    medications = Medication.objects.get(id=pk)
-    context = {'medications': medications}
-    return render(request, 'base/medication.html', context)
-
-
-def createMed(request):
-    form = MedForm()
-
-    if request.method == "POST":
-        form = MedForm(request.POST)
-        if form.is_valid():
-            meds = form.save(commit=False)
-            meds.save()
-            return redirect('home')
-            
-    context = {'form': form}
-    return render(request, 'base/meds_form.html', context)
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
