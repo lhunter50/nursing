@@ -1,5 +1,4 @@
 {% block content %}
-        {% for medication in medications %}
             <div>
                 <div>
                     <h1>{{medication.name}}</h1>
@@ -11,6 +10,4 @@
                 {{medication.route}}
                 {{medication.frequency}}
             </div>
-        {% endfor %}
-
 {% endblock content %}
