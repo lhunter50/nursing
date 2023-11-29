@@ -3,24 +3,24 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-    <div class="page-wrapper p-b-70 p-t-100 bg-gradiant">
-        <div class="wrapper">
-            <div class="container p-3 mb-2 bg-white text-white">
+    <div class="page-wrapper p-b-70 p-t-100 bg-grey ">
+        <div class="form-wrapper">
+            <div class="container p-3 mb-2 bg-white" style="border-radius: 10px">
+                <span class="form-header-text">Create New Medication</span>
                 <div class="row my-5">
-                    <div class="col">
-                        <a class="btn btn-outline-success btn-sm" href="/">Back</a>
-                    </div>
-        
-                    <div class="col-md-12">
+                    <div class="col-md-12" >
                         <form method="POST" action="" class="form">
                             {% csrf_token %}
                 
-                            {% bootstrap_form form layout="block" %}
+                            {% bootstrap_form form layout="floating" %}
                 
-                            {% bootstrap_button button_type="submit" content="Submit" %}
-                            
-                        </form>    
+                            <input class="form-buttons" type="submit" value="Submit" />
+                        </form>
+                        <div style="padding-top: 7px;">
+                            <a href="/" style="text-decoration: none; color: white;"><button class="form-buttons">Back</button></a>
+                        </div>
                     </div>
+                    
                 </div>
             </div>    
         </div>
