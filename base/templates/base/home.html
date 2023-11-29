@@ -2,12 +2,14 @@
 
 {% block content %}
 
-    <div class="container bg-light">
-        {% include 'base/header_component.html' %}
-        
-        {% include 'base/medication_component.html' %}
-        <hr/>
-        {% include 'base/footer_component.html' %}
+    <div class="p-t-100 bg-grey">
+        <div class="container bg-light ">
+            {% include 'base/header_component.html' %}
+            
+            {% include 'base/medication_component.html' %}
+            <hr/>
+            {% include 'base/footer_component.html' %}
+        </div>
     </div>
 
 {% endblock content %}
