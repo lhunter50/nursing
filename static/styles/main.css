@@ -1,0 +1,19 @@
+.page-wrapper{
+    min-height: 100vh;
+}
+
+.p-b-70{
+    padding-bottom: 70px;
+}
+
+.p-t-100{
+    padding-top: 100px;
+}
+
+.bg-gradiant{
+    background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+}
+
+.wrapper{
+    margin: 0 auto;
+}
