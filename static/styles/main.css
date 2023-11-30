@@ -2,10 +2,6 @@
     font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
 
-a{
-    text-decoration: none;
-}
-
 .page-wrapper{
     min-height: 100vh;
 }
@@ -40,6 +36,11 @@ a{
     color:white;
     display: block;
     letter-spacing: 1px;
+    transition-duration: 0.4s;
+}
+
+.form-buttons:hover{
+    background-color: yellow;
 }
 
 .form-header-text {
