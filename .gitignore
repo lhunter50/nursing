@@ -1,0 +1,16 @@
+#Pycache dirs and pycache files 
+*/__pycache__/*
+*.pyc
+
+#DB Files 
+*.sqlite3
+
+
+#Vim swap files 
+*.swp
+
+#Media files and folders 
+/media/*
+
+#VC stuff
+*.vscode
