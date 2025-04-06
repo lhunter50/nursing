@@ -33,13 +33,13 @@ class NewMedicationForm extends React.Component {
     // will deal with our POST requests when we submit the form, when we submit it will call this function and trigger the axios post() function
     createMedication = e => {
         e.preventDefault();
-        axios.put(API_URL + this.state.pk, this.state).then(() => {
+        axios.post(API_URL + this.state.pk, this.state).then(() => {
             this.props.resetState();
             this.props.toggle();
         })
     }
 
-    // also works with our POST calls, instead of creating a new medication we will edit an existing med.
+    // works with our PUT calls, instead of creating a new medication we will edit an existing med.
     editMedication = e => {
         e.preventDefault();
         axios.put(API_URL + this.state.pk, this.state).then(() => {
