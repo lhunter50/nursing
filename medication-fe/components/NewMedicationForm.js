@@ -59,7 +59,70 @@ class NewMedicationForm extends React.Component {
                     value={this.defaultIfEmpty(this.state.name)}
                 />
             </FormGroup>
-            
+
+            <FormGroup>
+                <Label for='classification'>Classification:</Label>
+                <Input 
+                    type='text'
+                    name='classification'
+                    onChange={this.onChange}
+                    value={this.defaultIfEmpty(this.state.classification)}
+                />
+            </FormGroup>
+
+            <FormGroup>
+                <Label for='intention'>Intention:</Label>
+                <Input 
+                    type='text'
+                    name='Intention'
+                    onChange={this.onChange}
+                    value={this.defaultIfEmpty(this.state.intention)}
+                />
+            </FormGroup>
+
+            <FormGroup>
+                <Label for='implications'>Implications:</Label>
+                <Input 
+                    type='text'
+                    name='implications'
+                    onChange={this.onChange}
+                    value={this.defaultIfEmpty(this.state.implications)}
+                />
+            </FormGroup>
+
+            <FormGroup>
+                <Label for='dose'>Dose:</Label>
+                <Input 
+                    type='text'
+                    name='dose'
+                    onChange={this.onChange}
+                    value={this.defaultIfEmpty(this.state.dose)}
+                />
+            </FormGroup>
+
+            <FormGroup>
+                <Label for='route'>Route:</Label>
+                <Input 
+                    type='text'
+                    name='route'
+                    onChange={this.onChange}
+                    value={this.defaultIfEmpty(this.state.route)}
+                />
+            </FormGroup>
+
+            <FormGroup>
+                <Label for='frequency'>Frequency:</Label>
+                <Input 
+                    type='text'
+                    name='frequency'
+                    onChange={this.onChange}
+                    value={this.defaultIfEmpty(this.state.frequency)}
+                />
+            </FormGroup>
+
+            <Button>Send</Button>
         </Form>
     }
 }
+
+export default NewMedicationForm;
