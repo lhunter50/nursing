@@ -4,4 +4,4 @@ from .models import Medication
 class MedicationSerializers(serializers.ModelSerializer):
     class Meta:
         model = Medication
-        fields = ('pk', 'name', 'classification', 'intention', 'implications', 'dose', 'route', 'frequency')
+        fields = ['pk', 'name', 'classification', 'intention', 'implications', 'dose', 'route', 'frequency']

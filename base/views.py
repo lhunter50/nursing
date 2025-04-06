@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.views.generic import ListView, FormView, UpdateView
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
 
 from .models import Medication
 from .forms import MedForm
+from .serializers import *
 # from .controller import search
 
 # Create your views here.
@@ -25,6 +29,40 @@ class Home(ListView):
             object_list = object_list.filter(name__icontains = search)
         return object_list
     
+@api_view(['GET', 'POST'])
+def medication_list(request):
+    if request.method == 'GET':
+        data = Medication.objects.all()
+
+        serializer = MedicationSerializers(data, context={'reqest': request}, many=True)
+
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = MedicationSerializers(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['PUT', 'DELETE'])
+def medication_detail(request, pk):
+    try:
+        medication = Medication.objects.get(pk=pk)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'PUT':
+        serializer = MedicationSerializers(medication, data=request.data, context={'request':request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        medication.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class MedicationView(ListView):
     template_name = 'base/medication.html'
