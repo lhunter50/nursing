@@ -1,6 +1,7 @@
 #Pycache dirs and pycache files 
 */__pycache__/*
 *.pyc
+node_modules
 
 #DB Files 
 *.sqlite3

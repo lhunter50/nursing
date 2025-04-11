@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-3h=gj-q7#5q%w+fjgxvt-yf-s8ou%pza3zs17#ah@#e(r!_umf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '192.168.235.128', '127.0.0.1', 'lock-server.local']
+ALLOWED_HOSTS = ['0.0.0.0', '192.168.235.128', '127.0.0.1', 'lock-server.local', 'localhost:3001']
 
 
 # Application definition
@@ -28,19 +28,26 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'base.apps.BaseConfig',
     'rest_framework',
+    'corsheaders',
+    'django_extensions',
+    'nursing'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
-ROOT_URLCONF = 'nursing.urls'
+CORS_ALLOW_ALL_ORIGINS = True
+
+ROOT_URLCONF = 'base.urls'
 
 TEMPLATES = [
     {
@@ -59,9 +66,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'nursing.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

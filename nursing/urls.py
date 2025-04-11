@@ -1,7 +1,8 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from rest_framework.routers import DefaultRouter
+from base.views import MedicationViewSet
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('base.urls')),
-]
+router = DefaultRouter()
+router.register(r'medications', MedicationViewSet)
+
+urlpatterns = router.urls  # No need to manually add /api/ here; it’s handled by the base urls
