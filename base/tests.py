@@ -1,12 +1,14 @@
 from django.test import TestCase
-from django.urls import reverse
-from rest_framework.test import APIClient
+from rest_framework.reverse import reverse
+from rest_framework.test import APITestCase
 from rest_framework import status
 from .models import Medication
+from .serializers import MedicationSerializers
 
 # Create your tests here.
 
 class MedicationModelTest(TestCase):
+  
   def setUp(self):
     Medication.objects.create(
       name= 'Tyenol', intention= 'Headaches', classification= 'Idk what it is', implications= 'Liver problems',dose= '2 pills', route= 'PO', frequency= 'Daily',
@@ -39,3 +41,101 @@ class MedicationModelTest(TestCase):
   def test_medication_frequency(self):
     medication = Medication.objects.get(frequency='Daily')
     self.assertEqual(medication.frequency, 'Daily')
+
+
+class MedicationViewsTest(APITestCase):
+  
+  @classmethod
+  def setUpTestData(cls):
+    cls.medications = [
+      Medication.objects.create(
+        name=f"Med {i}",
+        intention="Pain relief",
+        classification="Analgesic",
+        implications="Drowsiness",
+        dose="1 pill",
+        route="PO",
+        frequency="Daily"
+      ) for i in range(3)
+    ]
+    cls.medication = cls.medications[0]
+
+  def test_can_list_all_medications(self):
+    response = self.client.get('/api/medications/')
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    self.assertEqual(len(response.data), len(self.medications))
+
+  def test_can_get_one_medication(self):
+    response = self.client.get(f'/api/medications/{self.medication.id}/')
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    self.assertEqual(response.data['name'], self.medication.name)
+
+  def test_can_create_medication(self):
+    data = {
+      'name': 'New Med',
+      'intention': 'Allergy Relief',
+      'classification' : 'Something',
+      'implications' : 'Prob Tired',
+      'dose' : '300pills', 
+      'route' : 'PO',
+      'frequency' : 'Hourly'
+    }
+    response = self.client.post('/api/medications/', data, format='json')
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    self.assertEqual(Medication.objects.count(), 4)
+
+  def test_can_update_medication(self):
+    url = f'/api/medications/{self.medication.id}/'
+    data = {
+      'name' : 'Updated Name',
+      'intention' : self.medication.intention,
+      'classification' : self.medication.classification,
+      'implications' : self.medication.implications,
+      'dose' : self.medication.dose,
+      'route' : self.medication.route,
+      'frequency' : self.medication.frequency
+    }
+    response = self.client.put(url, data, format='json')
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    self.medication.refresh_from_db()
+    self.assertEqual(self.medication.name, 'Updated Name')
+
+  def test_can_delete_medication(self):
+    response = self.client.delete(f'/api/medications/{self.medication.id}/')
+    self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+    self.assertFalse(Medication.objects.filter(id=self.medication.id).exists())
+
+
+class MedicationSerializerTest(APITestCase):
+  @classmethod
+  def setUpData(cls):
+    cls.medications = [
+      Medication.objects.create(
+        name=f"Med {i}",
+        intention="Pain relief",
+        classification="Analgesic",
+        implications="Drowsiness",
+        dose="1 pill",
+        route="PO",
+        frequency="Daily"
+      ) for i in range(3)
+    ]
+    cls.medication = cls.medications[0]
+
+  def test_serializer_valid_data(self):
+    data = {
+      'name': 'New Med',
+      'intention': 'Allergy Relief',
+      'classification' : 'Something',
+      'implications' : 'Prob Tired',
+      'dose' : '300pills', 
+      'route' : 'PO',
+      'frequency' : 'Hourly'
+    }
+
+    serializer = MedicationSerializers(data=data)
+
+    self.assertTrue(serializer.is_valid())
+
+    self.assertEqual(serializer.validated_data['name'], 'New Med')
