@@ -139,3 +139,19 @@ class MedicationSerializerTest(APITestCase):
     self.assertTrue(serializer.is_valid())
 
     self.assertEqual(serializer.validated_data['name'], 'New Med')
+
+
+  def test_serializer_invalid_data(self):
+      data = {
+        'name': 'New Med',
+        'intention': 'Allergy Relief',
+        'classification' : 'Something',
+        'implications' : 'Prob Tired',
+        'dose' : '300pills', 
+        'route' : 'PO',
+        # 'frequency' : 'Hourly'
+      }
+      
+      serializer = MedicationSerializers(data=data)
+      self.assertFalse(serializer.is_valid())
+      self.assertIn('frequency', serializer.errors)
