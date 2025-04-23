@@ -44,7 +44,6 @@ class MedicationModelTest(TestCase):
 
 
 class MedicationViewsTest(APITestCase):
-  
   @classmethod
   def setUpTestData(cls):
     cls.medications = [
@@ -109,7 +108,7 @@ class MedicationViewsTest(APITestCase):
 
 class MedicationSerializerTest(APITestCase):
   @classmethod
-  def setUpData(cls):
+  def setUpTestData(cls):
     cls.medications = [
       Medication.objects.create(
         name=f"Med {i}",
@@ -155,3 +154,51 @@ class MedicationSerializerTest(APITestCase):
       serializer = MedicationSerializers(data=data)
       self.assertFalse(serializer.is_valid())
       self.assertIn('frequency', serializer.errors)
+
+  def test_serializer_create_instance(self):
+      data = {
+        'name': 'New Med',
+        'intention': 'Allergy Relief',
+        'classification' : 'Something',
+        'implications' : 'Prob Tired',
+        'dose' : '300pills', 
+        'route' : 'PO',
+        'frequency' : 'Hourly'
+      }
+
+      serializer = MedicationSerializers(data=data)
+      self.assertTrue(serializer.is_valid())
+
+      instance = serializer.save()
+
+      self.assertEqual(instance.name, 'New Med')
+      self.assertEqual(instance.intention, 'Allergy Relief')
+      self.assertEqual(instance.classification, 'Something')
+      self.assertEqual(instance.implications, 'Prob Tired')
+      self.assertEqual(instance.dose, '300pills')
+      self.assertEqual(instance.route, 'PO')
+      self.assertEqual(instance.frequency, 'Hourly')
+
+  def test_serializer_update_instance(self):
+    data = {
+        'name': 'Updated Med',
+        'intention': 'Updated Intention',
+        'classification' : 'Updated Classification',
+        'implications' : 'Updated Implications',
+        'dose' : 'Updated Dose', 
+        'route' : 'Updated Route',
+        'frequency' : 'Updated Frequency'
+      }
+    
+    serializer = MedicationSerializers(instance=self.medication, data=data)
+    self.assertTrue(serializer.is_valid())
+
+    updated_instance = serializer.save()
+
+    self.assertEqual(updated_instance.name, 'Updated Med')
+    self.assertEqual(updated_instance.intention, 'Updated Intention')
+    self.assertEqual(updated_instance.classification, 'Updated Classification')
+    self.assertEqual(updated_instance.implications, 'Updated Implications')
+    self.assertEqual(updated_instance.dose, 'Updated Dose')
+    self.assertEqual(updated_instance.route, 'Updated Route')
+    self.assertEqual(updated_instance.frequency, 'Updated Frequency')
