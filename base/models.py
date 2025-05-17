@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse
+import uuid
 
 # Create your models here.
 
@@ -10,8 +10,9 @@ class Medication(models.Model):
         TWICE_DAILY = 'BID', 'Twice Daily'
         THREE_TIMES_DAILY = 'TID', 'Three Times Daily'
         FOUR_TIMES_DAILY = 'QID', 'Four Times Daily'
-        AS_NEEDED = 'PRN', 'As Needed' 
-
+        AS_NEEDED = 'PRN', 'As Needed'
+         
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length = 200)
     classification = models.CharField(max_length=200)
     intention = models.CharField(max_length=200)
@@ -25,7 +26,8 @@ class Medication(models.Model):
     )
 
     class Meta:
-        ordering = ['-name']
+        # ordering = ['-name'],
+        app_label='base'
 
     def __str__(self):
         return self.name
