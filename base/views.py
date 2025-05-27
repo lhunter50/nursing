@@ -22,7 +22,6 @@ class MedicationUpdate(UpdateAPIView):
   serializer_class = MedicationSerializer
   lookup_url_kwarg = 'medication_id'
 
-
 class MedicationDelete(DestroyAPIView):
   queryset = Medication.objects.all()
   serializer_class = MedicationSerializer

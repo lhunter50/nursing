@@ -1,1 +1,8 @@
 Django>=4.2,<5.0
+
+djangorestframework>=3.14
+
+django-cors-framework>=4.0
+
+django-extensions>=3.2
+

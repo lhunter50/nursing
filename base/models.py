@@ -3,7 +3,6 @@ import uuid
 
 # Create your models here.
 
-
 class Medication(models.Model):
     class Frequency(models.TextChoices):
         ONCE_DAILY = 'QD', 'Once Daily'
