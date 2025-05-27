@@ -2,6 +2,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView,
 
 from base.models import Medication
 from base.serializers import MedicationSerializer
+
 # Create your views here.
 
 class MedicationList(ListAPIView):
